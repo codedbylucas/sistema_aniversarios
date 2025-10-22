@@ -64,8 +64,12 @@ $lista = $funcionarioDAO->buscarTodos();
                             <td class="py-3 px-4"><?= $dados->getWhatsapp() ?></td>
                             <td class="py-3 px-4"><?= $dados->getDataNascimento() ?></td>
                             <td class="py-3 px-4 flex gap-2">
-                                <button onclick="editarFuncionario('')" class="bg-yellow-400 hover:bg-yellow-500 text-white py-1 px-3 rounded-lg text-sm">Editar</button>
-                                <a href="../../app/controller/FuncionarioController.php?id=<?= $dados->getId() ?>" class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-lg text-sm">Excluir</a>
+                                <button
+                                    onclick="editarFuncionario(<?= $dados->getId() ?>)"
+                                    class="bg-yellow-400 hover:bg-yellow-500 text-white py-1 px-3 rounded-lg text-sm">
+                                    Editar
+                                </button>
+                                <a href="../../app/controller/FuncionarioController.php?acao=deletar&id=<?= $dados->getId() ?>" class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-lg text-sm">Excluir</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -87,7 +91,7 @@ $lista = $funcionarioDAO->buscarTodos();
             <button onclick="fecharModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
             <h3 class="text-2xl font-bold text-blue-600 mb-6 text-center">Cadastrar Funcionário</h3>
 
-            <form id="formFuncionario" method="POST" action="../../app/controller/FuncionarioController.php" class="space-y-5">
+            <form id="formFuncionario" method="POST" action="../../app/controller/FuncionarioController.php?acao=cadastrar" class="space-y-5">
                 <div>
                     <label class="block text-blue-700 font-semibold mb-2">Nome</label>
                     <input type="text" name="nome" required placeholder="Nome completo"
@@ -120,6 +124,47 @@ $lista = $funcionarioDAO->buscarTodos();
         </div>
     </div>
 
+    <!-- Modal de Editar -->
+    <div id="modalEditar" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-lg relative">
+            <button onclick="fecharModalEditar()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+            <h3 class="text-2xl font-bold text-yellow-500 mb-6 text-center">Editar Funcionário</h3>
+
+            <form id="formEditarFuncionario" method="POST" action="../../app/controller/FuncionarioController.php?acao=editar" class="space-y-5">
+                <input type="hidden" name="id" id="editarId">
+
+                <div>
+                    <label class="block text-yellow-700 font-semibold mb-2">Nome</label>
+                    <input type="text" name="nome" id="editarNome" required
+                        class="w-full p-3 border border-yellow-300 rounded-lg focus:ring-2 focus:ring-yellow-400">
+                </div>
+
+                <div>
+                    <label class="block text-yellow-700 font-semibold mb-2">Cargo</label>
+                    <input type="text" name="cargo" id="editarCargo" required
+                        class="w-full p-3 border border-yellow-300 rounded-lg focus:ring-2 focus:ring-yellow-400">
+                </div>
+
+                <div>
+                    <label class="block text-yellow-700 font-semibold mb-2">WhatsApp</label>
+                    <input type="text" name="whatsapp" id="editarWhatsapp" required
+                        class="w-full p-3 border border-yellow-300 rounded-lg focus:ring-2 focus:ring-yellow-400">
+                </div>
+
+                <div>
+                    <label class="block text-yellow-700 font-semibold mb-2">Data de Nascimento</label>
+                    <input type="date" name="data_nascimento" id="editarDataNascimento" required
+                        class="w-full p-3 border border-yellow-300 rounded-lg focus:ring-2 focus:ring-yellow-400">
+                </div>
+
+                <button type="submit" name="editar"
+                    class="w-full bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-3 rounded-lg transition">
+                    Atualizar Funcionário
+                </button>
+            </form>
+        </div>
+    </div>
+
     <script>
         function abrirModal() {
             document.getElementById('modal').classList.remove('hidden');
@@ -130,7 +175,8 @@ $lista = $funcionarioDAO->buscarTodos();
         }
     </script>
 
-    <script src="../../assets/js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../assets/js/funcionario.js "></script>
 
 </body>
 

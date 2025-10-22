@@ -29,7 +29,27 @@ class FuncionarioDAO implements IFuncionarioDAO
         $sql->bindValue(':id', $id);
         $sql->execute();
     }
-    public function buscarPorId($id) {}
+    public function buscarPorId($id)
+    {
+        $sql = $this->pdo->prepare('SELECT * FROM funcionarios WHERE id = :id');
+        $sql->bindValue(':id', $id);
+        $sql->execute();
+
+        if ($sql->rowCount() > 0) {
+            
+            $data = $sql->fetch(PDO::FETCH_ASSOC);
+            $funcionario = new Funcionario();
+            $funcionario->setId($data['id']);
+            $funcionario->setNome($data['nome']);
+            $funcionario->setCargo($data['cargo']);
+            $funcionario->setWhatsapp($data['whatsapp']);
+            $funcionario->setDataNascimento($data['data_nascimento']);
+
+            return $funcionario;
+        }
+        return null;    
+        
+    }
 
     public function buscarTodos()
     {

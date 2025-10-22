@@ -26,6 +26,17 @@ class Funcionario
 
     public function getStatus() { return $this->status; }
     public function setStatus($status) { $this->status = $status; }
+
+    public function returnArray() {
+        return [
+            'id' => $this->id,
+            'nome' => $this->nome,
+            'data_nascimento' => $this->data_nascimento,
+            'cargo' => $this->cargo,
+            'whatsapp' => $this->whatsapp,
+            'status' => $this->status
+        ];
+    }
 }
 
 interface IFuncionarioDAO {
