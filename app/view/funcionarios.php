@@ -8,12 +8,6 @@ if (AutenticacaoController::validarAcesso() === false) {
     AutenticacaoController::encerrarSessao();
 }
 
-$db = new DBConnection();
-$pdo = $db->getConnection();
-$funcionarioDAO = new FuncionarioDAO($pdo);
-$lista = $funcionarioDAO->buscarTodos();
-
-
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +17,8 @@ $lista = $funcionarioDAO->buscarTodos();
     <meta charset="UTF-8">
     <title>Funcionários | Sistema de Aniversários</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="../../assets/js/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../assets/js/funcionario.js "></script>
 </head>
 
 <body class="bg-blue-50 min-h-screen flex">
@@ -35,7 +30,8 @@ $lista = $funcionarioDAO->buscarTodos();
     <main class="flex-1 p-10">
         <div class="flex justify-between items-center mb-8">
             <h2 class="text-3xl font-bold text-blue-700">👥 Funcionários</h2>
-            <button onclick="abrirModal()"
+            <button
+                onclick="abrirModalCadastrar()"
                 class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg shadow-lg transition">
                 + Adicionar Funcionário
             </button>
@@ -54,72 +50,52 @@ $lista = $funcionarioDAO->buscarTodos();
                         <th class="py-3 px-4 text-left">Ações</th>
                     </tr>
                 </thead>
+
                 <tbody id="tabela-funcionarios">
-                    <!-- Exemplo de funcionário -->
-                    <?php foreach ($lista as $dados) : ?>
-                        <tr class="border-b hover:bg-blue-50">
-                            <td class="py-3 px-4">#<?= $dados->getId() ?></td>
-                            <td class="py-3 px-4"><?= $dados->getNome() ?></td>
-                            <td class="py-3 px-4"><?= $dados->getCargo() ?></td>
-                            <td class="py-3 px-4"><?= $dados->getWhatsapp() ?></td>
-                            <td class="py-3 px-4"><?= $dados->getDataNascimento() ?></td>
-                            <td class="py-3 px-4 flex gap-2">
-                                <button
-                                    onclick="editarFuncionario(<?= $dados->getId() ?>)"
-                                    class="bg-yellow-400 hover:bg-yellow-500 text-white py-1 px-3 rounded-lg text-sm">
-                                    Editar
-                                </button>
-                                <a href="../../app/controller/FuncionarioController.php?acao=deletar&id=<?= $dados->getId() ?>" class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-lg text-sm">Excluir</a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
+                    
                 </tbody>
+                <!-- Via javascript -->
             </table>
         </div>
-        <?php
-        if (isset($_GET['mensagem'])) {
-            echo "<div id='mensagem-alerta' class='mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg'>
-            {$_GET['mensagem']}
-          </div>";
-        }
-        ?>
     </main>
 
     <!-- Modal de cadastro -->
     <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div class="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-lg relative">
-            <button onclick="fecharModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+            <button onclick="fecharModalCadastrar()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
             <h3 class="text-2xl font-bold text-blue-600 mb-6 text-center">Cadastrar Funcionário</h3>
 
-            <form id="formFuncionario" method="POST" action="../../app/controller/FuncionarioController.php?acao=cadastrar" class="space-y-5">
+            <form id="formFuncionario" class="space-y-5">
                 <div>
                     <label class="block text-blue-700 font-semibold mb-2">Nome</label>
-                    <input type="text" name="nome" required placeholder="Nome completo"
+                    <input type="text" id="nome" name="nome" required placeholder="Nome completo"
                         class="w-full p-3 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-400">
                 </div>
 
                 <div>
                     <label class="block text-blue-700 font-semibold mb-2">Cargo</label>
-                    <input type="text" name="cargo" required placeholder="Ex: Financeiro, Logística..."
+                    <input type="text" id="cargo" name="cargo" required placeholder="Ex: Financeiro, Logística..."
                         class="w-full p-3 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-400">
                 </div>
 
                 <div>
                     <label class="block text-blue-700 font-semibold mb-2">WhatsApp</label>
-                    <input type="text" name="whatsapp" required placeholder="Ex: 44999567884"
+                    <input type="text" id="whatsapp" name="whatsapp" required placeholder="Ex: 44999567884"
                         class="w-full p-3 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-400">
                 </div>
 
                 <div>
                     <label class="block text-blue-700 font-semibold mb-2">Data de Nascimento</label>
-                    <input type="date" name="data_nascimento" required
+                    <input type="date" id="data_nascimento" name="data_nascimento" required
                         class="w-full p-3 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-400">
                 </div>
 
-                <button type="submit" name="cadastrar"
-                    class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-lg transition">
-                    Salvar Funcionário
-                </button>
+                <input
+                    onclick="cadastrarFuncionario()"
+                    type="button"
+                    class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-lg transition"
+                    value="Cadastrar"
+                />
             </form>
         </div>
     </div>
@@ -130,8 +106,8 @@ $lista = $funcionarioDAO->buscarTodos();
             <button onclick="fecharModalEditar()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
             <h3 class="text-2xl font-bold text-yellow-500 mb-6 text-center">Editar Funcionário</h3>
 
-            <form id="formEditarFuncionario" method="POST" action="../../app/controller/FuncionarioController.php?acao=editar" class="space-y-5">
-                <input type="hidden" name="id" id="editarId">
+            <form id="formEditarFuncionario" class="space-y-5">
+                <input type="hidden" id="editarId">
 
                 <div>
                     <label class="block text-yellow-700 font-semibold mb-2">Nome</label>
@@ -157,26 +133,17 @@ $lista = $funcionarioDAO->buscarTodos();
                         class="w-full p-3 border border-yellow-300 rounded-lg focus:ring-2 focus:ring-yellow-400">
                 </div>
 
-                <button type="submit" name="editar"
-                    class="w-full bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-3 rounded-lg transition">
-                    Atualizar Funcionário
-                </button>
+                <input
+                    type="button"
+                    onclick="atualizarFuncionario()"
+                    class="w-full bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-3 rounded-lg transition"
+                    value="Atualizar" 
+                />
+
+
             </form>
         </div>
     </div>
-
-    <script>
-        function abrirModal() {
-            document.getElementById('modal').classList.remove('hidden');
-        }
-
-        function fecharModal() {
-            document.getElementById('modal').classList.add('hidden');
-        }
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../../assets/js/funcionario.js "></script>
 
 </body>
 

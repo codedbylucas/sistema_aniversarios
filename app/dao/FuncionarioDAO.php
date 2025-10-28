@@ -21,13 +21,21 @@ class FuncionarioDAO implements IFuncionarioDAO
         $sql->bindValue(':data_nascimento', $funcionario->getDataNascimento());
         $sql->execute();
     }
-    public function atualizar(Funcionario $funcionario) {}
+    public function atualizar(Funcionario $funcionario) {
+        $sql = $this->pdo->prepare("UPDATE funcionarios SET nome = :nome, cargo = :cargo, whatsapp = :whatsapp, data_nascimento = :data_nascimento WHERE id = :id");
+        $sql->bindValue(':nome', $funcionario->getNome());
+        $sql->bindValue(':cargo', $funcionario->getCargo());
+        $sql->bindValue(':whatsapp', $funcionario->getWhatsapp());
+        $sql->bindValue(':data_nascimento', $funcionario->getDataNascimento());
+        $sql->bindValue(':id', $funcionario->getId());
+        return $sql->execute(); 
+    }
 
     public function deletar($id)
     {
         $sql = $this->pdo->prepare('DELETE FROM funcionarios WHERE id = :id');
         $sql->bindValue(':id', $id);
-        $sql->execute();
+        return $sql->execute();
     }
     public function buscarPorId($id)
     {
@@ -53,7 +61,7 @@ class FuncionarioDAO implements IFuncionarioDAO
 
     public function buscarTodos()
     {
-        $funcionarios = [];
+        $array = [];
         $sql = $this->pdo->query("SELECT * FROM funcionarios");
         if ($sql->rowCount() > 0) {
             $dados = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -64,9 +72,10 @@ class FuncionarioDAO implements IFuncionarioDAO
                 $funcionario->setCargo($item['cargo']);
                 $funcionario->setWhatsapp($item['whatsapp']);
                 $funcionario->setDataNascimento($item['data_nascimento']);
-                $funcionarios[] = $funcionario;
+                $array[] = $funcionario;
             }
+            return $array;
         }
-        return $funcionarios;
+        return false;
     }
 }

@@ -35,7 +35,7 @@
         </form>
         <?php
         if (isset($_GET['mensagem'])) {
-            echo "<div class='mt-4 p-4 bg-red-100 border border-green-400 text-green-700 rounded-lg'>
+            echo "<div class='mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg'>
             {$_GET['mensagem']}
           </div>";
         }

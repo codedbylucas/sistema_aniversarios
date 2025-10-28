@@ -7,7 +7,6 @@ class Funcionario
     private $data_nascimento;
     private $cargo;
     private $whatsapp;
-    private $status;
 
     public function getId() { return $this->id; }
     public function setId($id) { $this->id = $id; }
@@ -24,17 +23,13 @@ class Funcionario
     public function getWhatsapp() { return $this->whatsapp; }
     public function setWhatsapp($whatsapp) { $this->whatsapp = $whatsapp; }
 
-    public function getStatus() { return $this->status; }
-    public function setStatus($status) { $this->status = $status; }
-
     public function returnArray() {
         return [
             'id' => $this->id,
             'nome' => $this->nome,
             'data_nascimento' => $this->data_nascimento,
             'cargo' => $this->cargo,
-            'whatsapp' => $this->whatsapp,
-            'status' => $this->status
+            'whatsapp' => $this->whatsapp
         ];
     }
 }

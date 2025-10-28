@@ -42,11 +42,19 @@
 
     <?php
     if (isset($_GET['mensagem'])) {
-      echo "<div id='mensagem-alerta' class='mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg'>
+      echo "<div id='mensagem-alerta' class='mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg'>
             {$_GET['mensagem']}
           </div>";
     }
+
+    if (isset($_GET['erro'])) {
+      echo "<div class='mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg'>
+            {$_GET['erro']}
+          </div>";
+    }
     ?>
+
+
 
     <!-- Link para Login -->
     <p class="mt-6 text-center text-blue-400">Já tem uma conta?
