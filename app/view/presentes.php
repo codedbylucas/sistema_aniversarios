@@ -26,12 +26,18 @@ if (AutenticacaoController::validarAcesso() === false) {
     <?php require '../header/header.php'; ?>
 
     <main class="flex-1 p-10">
-        <h1 class="text-3xl font-semibold text-blue-800 mb-6">🎁 Controle de Presentes</h1>
 
-        <!-- Botão para abrir modal de cadastro -->
-        <button onclick="abrirModalCadastro()" class="mb-6 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-xl font-medium transition">
-            + Cadastrar Presente
-        </button>
+        
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-3xl font-bold text-blue-700">🎁 Controle de Presentes</h2>
+            <button
+                onclick="abrirModalCadastro()"
+                class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg shadow-lg transition">
+                + Cadastrar Presente
+            </button>
+        </div>
+
+        
 
         <!-- Tabela de funcionários -->
         <div class="bg-white rounded-3xl shadow-xl p-8">
