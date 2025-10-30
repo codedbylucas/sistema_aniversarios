@@ -68,7 +68,7 @@ class FuncionarioController
                 header('Content-Type: application/json');
                 echo json_encode(['sucesso' => true, 'mensagem' => 'Funcionário deletado com sucesso!']);
             } else {
-                echo json_encode(['erro' => true, 'mensagem' => 'Falha ao deletar usuario']);
+                echo json_encode(['erro' => true, 'mensagem' => 'O Funcionario tem participação em presentes']);
             }
         } else {
             echo json_encode(['erro' => 'Erro ao deletar funcionario!']);

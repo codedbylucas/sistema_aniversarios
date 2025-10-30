@@ -29,13 +29,12 @@ function deletarFuncionario(id) {
             })
                 .then(response => response.json())
                 .then(data => {
+                    console.log(data)
                     if (data.sucesso) {
-                        const linha = document.getElementById(`linha-${id}`);
-                        if (linha) linha.remove();
-
+                        listarFuncionario()
                         Swal.fire('Deletado!', data.mensagem, 'success');
                     } else {
-                        Swal.fire('Erro', data.mensagem, 'error');
+                        Swal.fire('Alerta!', data.mensagem, 'error');
                     }
 
                 }).catch(error => {
@@ -156,10 +155,6 @@ function listarFuncionario() {
         .then(funcionarios => {
 
             const tbody = document.querySelector('#tabela-funcionarios');
-            if (!tbody) {
-                console.error("Elemento #tabela-funcionarios não encontrado na página.");
-                return;
-            }
 
             tbody.innerHTML = ''; // Limpa a tabela antes de recriar
 
@@ -169,7 +164,7 @@ function listarFuncionario() {
                 funcionarios = [funcionarios];
             }
 
-            if (funcionarios.length === 0) {
+            if (funcionarios[0].erro) {
                 tbody.innerHTML = `
                     <tr>
                         <td colspan="6" class="text-center py-4 text-gray-500">
@@ -182,7 +177,7 @@ function listarFuncionario() {
 
             funcionarios.forEach(f => {
                 const tr = document.createElement('tr');
-                tr.id = `linha-${f.id}`; // <--- ID da linha
+                // tr.id = `linha-${f.id}`; // <--- ID da linha
                 tr.classList.add('border-b', 'hover:bg-blue-50');
 
                 tr.innerHTML = `

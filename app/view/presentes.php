@@ -27,7 +27,7 @@ if (AutenticacaoController::validarAcesso() === false) {
 
     <main class="flex-1 p-10">
 
-        
+
         <div class="flex justify-between items-center mb-8">
             <h2 class="text-3xl font-bold text-blue-700">🎁 Controle de Presentes</h2>
             <button
@@ -37,7 +37,7 @@ if (AutenticacaoController::validarAcesso() === false) {
             </button>
         </div>
 
-        
+
 
         <!-- Tabela de funcionários -->
         <div class="bg-white rounded-3xl shadow-xl p-8">
@@ -93,6 +93,35 @@ if (AutenticacaoController::validarAcesso() === false) {
                     class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-lg transition"
                     value="Cadastrar" />
             </form>
+        </div>
+    </div>
+
+    <!-- Modal de Detalhes do Presente -->
+    <div id="modalDetalhes" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-3xl shadow-lg w-full max-w-2xl p-6">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4">Detalhes do Presente</h2>
+
+            <div id="detalhesPresente" class="mb-6 space-y-2">
+                <!-- Aqui serão inseridos os dados do presente via JS -->
+            </div>
+
+            <h3 class="text-lg font-semibold text-gray-700 mb-2">Participantes</h3>
+            <table class="w-full border-collapse">
+                <thead>
+                    <tr class="bg-gray-100 text-left">
+                        <th class="py-2 px-3">Funcionário</th>
+                        <th class="py-2 px-3 text-center">Status</th>
+                        <th class="py-2 px-3 text-center">Valor</th>
+                        <th class="py-2 px-3 text-center">Ação</th>
+                        <th class="py-2 px-3 text-center">Remover Participação</th>
+                    </tr>
+                </thead>
+                <tbody id="listaParticipantes"></tbody>
+            </table>
+
+            <div class="flex justify-end gap-3 mt-6">
+                <button onclick="fecharModalDetalhes()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-lg">Fechar</button>
+            </div>
         </div>
     </div>
 

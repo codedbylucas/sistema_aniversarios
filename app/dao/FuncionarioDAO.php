@@ -21,21 +21,39 @@ class FuncionarioDAO implements IFuncionarioDAO
         $sql->bindValue(':data_nascimento', $funcionario->getDataNascimento());
         $sql->execute();
     }
-    public function atualizar(Funcionario $funcionario) {
+    public function atualizar(Funcionario $funcionario)
+    {
         $sql = $this->pdo->prepare("UPDATE funcionarios SET nome = :nome, cargo = :cargo, whatsapp = :whatsapp, data_nascimento = :data_nascimento WHERE id = :id");
         $sql->bindValue(':nome', $funcionario->getNome());
         $sql->bindValue(':cargo', $funcionario->getCargo());
         $sql->bindValue(':whatsapp', $funcionario->getWhatsapp());
         $sql->bindValue(':data_nascimento', $funcionario->getDataNascimento());
         $sql->bindValue(':id', $funcionario->getId());
-        return $sql->execute(); 
+        return $sql->execute();
     }
 
     public function deletar($id)
     {
-        $sql = $this->pdo->prepare('DELETE FROM funcionarios WHERE id = :id');
+        $sql = $this->pdo->prepare(
+            'SELECT 
+                f.id,
+                COUNT(*) as contagem_funcionarios,
+                pp.id_funcionario
+            FROM funcionarios f
+            INNER JOIN participacoes_presentes pp ON f.id = pp.id_funcionario
+            WHERE f.id = :id'
+        );
         $sql->bindValue(':id', $id);
-        return $sql->execute();
+        $sql->execute();
+        $result = $sql->fetch(PDO::FETCH_ASSOC);
+
+        if ($result['contagem_funcionarios'] > 0) {
+            return false;
+        } else {
+            $sql = $this->pdo->prepare('DELETE FROM funcionarios WHERE id = :id');
+            $sql->bindValue(':id', $id);
+            return $sql->execute();
+        }
     }
     public function buscarPorId($id)
     {
@@ -44,7 +62,7 @@ class FuncionarioDAO implements IFuncionarioDAO
         $sql->execute();
 
         if ($sql->rowCount() > 0) {
-            
+
             $data = $sql->fetch(PDO::FETCH_ASSOC);
             $funcionario = new Funcionario();
             $funcionario->setId($data['id']);
@@ -55,8 +73,7 @@ class FuncionarioDAO implements IFuncionarioDAO
 
             return $funcionario;
         }
-        return null;    
-        
+        return null;
     }
 
     public function buscarTodos()

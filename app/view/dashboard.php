@@ -1,8 +1,8 @@
-<?php 
+<?php
 session_start();
 require_once __DIR__ . '/../controller/AutenticacaoController.php';
 
-if(AutenticacaoController::validarAcesso() === false){
+if (AutenticacaoController::validarAcesso() === false) {
     AutenticacaoController::encerrarSessao();
 }
 
@@ -15,12 +15,13 @@ if(AutenticacaoController::validarAcesso() === false){
     <meta charset="UTF-8">
     <title>Dashboard | Sistema de Aniversários</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="../../assets/js/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../assets/js/dashboard.js "></script>
 </head>
 
 <body class="bg-blue-50 min-h-screen flex">
 
-    <?php require '../header/header.php';?>
+    <?php require '../header/header.php'; ?>
 
     <!-- Conteúdo principal -->
     <main class="flex-1 p-10">
@@ -28,21 +29,8 @@ if(AutenticacaoController::validarAcesso() === false){
         <h2 class="text-3xl font-bold text-blue-700 mb-8">Bem-vindo, <?= $_SESSION['nome']; ?></h2>
 
         <!-- Cards de resumo -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            <div class="bg-white rounded-2xl shadow-lg p-6 text-center hover:scale-105 transition">
-                <h3 class="text-lg font-semibold text-blue-600 mb-2">Aniversariantes do Mês</h3>
-                <p class="text-4xl font-bold text-blue-700">3</p>
-            </div>
-
-            <div class="bg-white rounded-2xl shadow-lg p-6 text-center hover:scale-105 transition">
-                <h3 class="text-lg font-semibold text-blue-600 mb-2">Funcionários Cadastrados</h3>
-                <p class="text-4xl font-bold text-blue-700">12</p>
-            </div>
-
-            <div class="bg-white rounded-2xl shadow-lg p-6 text-center hover:scale-105 transition">
-                <h3 class="text-lg font-semibold text-blue-600 mb-2">Presentes Pagos</h3>
-                <p class="text-4xl font-bold text-blue-700">8</p>
-            </div>
+        <div id="card-relatorio" class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            
         </div>
 
         <!-- Seção de aniversariantes -->

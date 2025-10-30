@@ -66,7 +66,8 @@ class PresenteController
         }
     }
 
-    public function listarPresentes() {
+    public function listarPresentes()
+    {
         $presentes = $this->presenteDAO->buscarTodos();
 
         if ($presentes) {
@@ -77,6 +78,87 @@ class PresenteController
         } else {
             echo json_encode(['erro' => 'Erro ao buscar presentes!']);
             exit;
+        }
+    }
+
+    public function detalhesPresente($id)
+    {
+
+        if ($id) {
+            $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+
+            $detalhe = $this->presenteDAO->buscarDetalhes($id);
+
+            if ($detalhe) {
+                header('Content-Type: application/json');
+                echo json_encode($detalhe);
+            } else {
+                echo json_encode(['erro' => 'Erro ao buscar detalhes do presente!']);
+                exit;
+            }
+        }
+    }
+
+    public function marcarComoPago($id_relacao)
+    {
+
+        $id_relacao = filter_var($id_relacao, FILTER_SANITIZE_NUMBER_INT);
+
+        if ($id_relacao) {
+            $id_presente = $this->presenteDAO->buscarPorIdPresente($id_relacao);
+            $pago = $this->presenteDAO->marcarComoPago($id_relacao);
+
+            if ($pago) {
+                header('Content-Type: application/json');
+                echo json_encode([
+                    'success' => $pago,
+                    'id_presente' => $id_presente
+                    ]);
+            } else {
+                echo json_encode(['erro' => 'Erro ao marcar pagamento como pago!']);
+                exit;
+            }
+        }
+    }
+
+    public function deletarParticipacao($id_relacao)
+    {
+        $id_relacao = filter_var($id_relacao, FILTER_SANITIZE_NUMBER_INT);
+
+        if ($id_relacao) {
+
+            $id_presente = $this->presenteDAO->buscarPorIdPresente($id_relacao);
+            $deletar = $this->presenteDAO->deletarParticipacao($id_relacao);
+
+            if ($deletar) {
+                header('Content-Type: application/json');
+                echo json_encode([
+                    'success' => $deletar,
+                    'id_presente' => $id_presente
+                ]);
+            } else {
+                echo json_encode(['erro' => 'Erro ao deletar participação!']);
+                exit;
+            }
+        }
+    }
+
+    public function deletarPresente($id_presente)
+    {
+        $id_presente = filter_var($id_presente, FILTER_SANITIZE_NUMBER_INT);
+
+        if ($id_presente) {
+            $deletar = $this->presenteDAO->deletarPresente($id_presente);
+
+            if ($deletar) {
+                header('Content-Type: application/json');
+                echo json_encode([
+                    'success' => $deletar
+                ]);
+            } else {
+                echo json_encode(['erro' => $deletar]);
+                exit;
+            }
         }
     }
 }
@@ -94,4 +176,24 @@ if (!empty($_GET['acao']) && $_GET['acao'] === 'cadastrar') {
 if (!empty($_GET['acao']) && $_GET['acao'] === 'listar') {
     $presenteController = new PresenteController();
     $presenteController->listarPresentes();
+}
+
+if (!empty($_GET['acao']) && $_GET['acao'] === 'detalhes') {
+    $presenteController = new PresenteController();
+    $presenteController->detalhesPresente($_GET['id']);
+}
+
+if (!empty($_GET['acao']) && $_GET['acao'] === 'marcarPago') {
+    $presenteController = new PresenteController();
+    $presenteController->marcarComoPago($_GET['id_relacao']);
+}
+
+if (!empty($_GET['acao']) && $_GET['acao'] === 'deletarParticipacao') {
+    $presenteController = new PresenteController();
+    $presenteController->deletarParticipacao($_GET['id_relacao']);
+}
+
+if(!empty($_GET['acao']) && $_GET['acao'] === 'deletarPresente'){
+    $presenteController = new PresenteController();
+    $presenteController->deletarPresente($_GET['id']);
 }
