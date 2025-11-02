@@ -79,7 +79,7 @@ class FuncionarioDAO implements IFuncionarioDAO
     public function buscarTodos()
     {
         $array = [];
-        $sql = $this->pdo->query("SELECT * FROM funcionarios");
+        $sql = $this->pdo->query("SELECT * FROM funcionarios ORDER BY nome ASC");
         if ($sql->rowCount() > 0) {
             $dados = $sql->fetchAll(PDO::FETCH_ASSOC);
             foreach ($dados as $item) {
