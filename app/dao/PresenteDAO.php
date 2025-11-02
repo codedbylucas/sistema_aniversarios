@@ -82,7 +82,7 @@ class PresenteDAO implements IPresenteDAO
 
     public function buscarTodos()
     {
-        $sql = $this->pdo->query("SELECT * FROM presentes");
+        $sql = $this->pdo->query("SELECT * FROM presentes ORDER BY status DESC");
         if ($sql->rowCount() > 0) {
             $result = $sql->fetchAll(PDO::FETCH_ASSOC);
             $presentes = [];

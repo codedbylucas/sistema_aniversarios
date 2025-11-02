@@ -36,7 +36,9 @@ function relatorioDash() {
                 data = [data];
             }
 
-            if (data[0].aniversariantes_mes) {
+            console.log(data[0].aniversariantes_mes)
+
+            if (!data[0].aniversariantes_mes) {
                 tbody.innerHTML = `
                     <tr>
                         <td colspan="6" class="text-center py-4 text-gray-500">

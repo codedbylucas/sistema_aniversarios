@@ -29,7 +29,7 @@ if (AutenticacaoController::validarAcesso() === false) {
 
 
         <div class="flex justify-between items-center mb-8">
-            <h2 class="text-3xl font-bold text-blue-700">🎁 Controle de Presentes</h2>
+            <h2 class="text-3xl font-bold text-blue-700">Controle de Presentes</h2>
             <button
                 onclick="abrirModalCadastro()"
                 class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg shadow-lg transition">

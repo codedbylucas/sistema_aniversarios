@@ -3,7 +3,7 @@
     <div>
         <!-- Logo / título -->
         <h1 class="text-2xl font-extrabold tracking-wide mb-10 text-center">
-            🎉 Aniversários
+            Sistema Aniversários
         </h1>
 
         <!-- Navegação -->

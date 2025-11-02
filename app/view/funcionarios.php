@@ -28,7 +28,7 @@ if (AutenticacaoController::validarAcesso() === false) {
     <!-- Conteúdo principal -->
     <main class="flex-1 ml-64 p-10 overflow-y-auto">
         <div class="flex justify-between items-center mb-8">
-            <h2 class="text-3xl font-bold text-blue-700">👥 Funcionários</h2>
+            <h2 class="text-3xl font-bold text-blue-700">Funcionários</h2>
             <button
                 onclick="abrirModalCadastrar()"
                 class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg shadow-lg transition">
