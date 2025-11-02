@@ -6,18 +6,21 @@ class Presente{
     private $valor_total;
     private $funcionarios = [];
     private $status;
+    private $data_cadastro;
 
     public function getId() { return $this->id; }
     public function getDescricao() { return $this->descricao; }
     public function getValorTotal() { return $this->valor_total; }
     public function getFuncionarios() { return $this->funcionarios; }
     public function getStatus() { return $this->status; }
+    public function getDataCadastro() {return $this->data_cadastro;}
 
     public function setId($id) { $this->id = $id; }
     public function setDescricao($descricao) { $this->descricao = ucwords($descricao); }
     public function setValorTotal($valor_total) { $this->valor_total = $valor_total; }
     public function setFuncionarios($funcionarios) { $this->funcionarios = $funcionarios; }
     public function setStatus($status) { $this->status = $status; }
+    public function setDataCadastro($data_cadastro) {$this->data_cadastro = $data_cadastro;}
 
 
     public function returnArray() {
@@ -26,7 +29,8 @@ class Presente{
             'descricao' => $this->descricao,
             'valor_total' => $this->valor_total,
             'funcionarios' => $this->funcionarios, 
-            'status' => $this->status
+            'status' => $this->status,
+            'data_cadastro' => $this->data_cadastro
         ];
     }
 

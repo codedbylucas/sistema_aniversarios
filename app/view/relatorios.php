@@ -18,12 +18,12 @@ if (AutenticacaoController::validarAcesso() === false) {
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-slate-100 min-h-screen flex">
+<body class="bg-blue-50 min-h-screen flex">
 
     <?php require '../header/header.php'; ?>
 
     <!-- Conteúdo principal -->
-    <main class="flex-1 p-10">
+    <main class="flex-1 ml-64 p-10 overflow-y-auto">
         <h1 class="text-3xl font-semibold text-blue-800 mb-6">📊 Relatórios Gerais</h1>
 
         <!-- Filtros -->

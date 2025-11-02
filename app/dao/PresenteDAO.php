@@ -92,6 +92,7 @@ class PresenteDAO implements IPresenteDAO
                 $presente->setDescricao($row['descricao']);
                 $presente->setValorTotal($row['valor_total']);
                 $presente->setStatus($row['status']);
+                $presente->setDataCadastro($row['data_cadastro']);
                 $presentes[] = $presente;
             }
             return $presentes;

@@ -52,7 +52,7 @@ class FuncionarioController
             echo json_encode(['sucesso' => true, 'mensagem' => 'Funcionario cadastrado com sucesso!']);
             exit;
         } else {
-            echo json_encode(['erro' => 'Erro ao cadastrar Funcionario!']);
+            echo json_encode(['erro' => 'Preencha todos os campos!']);
             exit;
         }
     }

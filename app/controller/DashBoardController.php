@@ -22,20 +22,16 @@ class DashBoardController
         $presentesPagos = $this->dashboardDao->presentesPagos();
         $aniversariosMes = $this->dashboardDao->aniversariosMes();
 
+        header('Content-Type: application/json');
+        echo json_encode([['funcionarios' => count($getFuncionarios),
+            'presentes' => $presentesPagos,
+            'aniversariantes_mes' => $aniversariosMes]]);
 
-        if ($getFuncionarios) {
-            header('Content-Type: application/json');
-            echo json_encode([
-                'funcionarios' => count($getFuncionarios),
-                'presentes' => $presentesPagos,
-                'aniversariantes_mes' => $aniversariosMes
-            ]);
-        }
     }
 }
 
 //LISTAR
-if (isset($_GET['acao']) && $_GET['acao'] === 'getFuncionarios') {
+if (isset($_GET['acao']) && $_GET['acao'] === 'relatorioDash') {
     $controller = new DashBoardController();
     $controller->relatorioDash();
 }

@@ -51,11 +51,12 @@ function cadastrarPresente() {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
+                console.log(data)
                 fecharModalCadastro();
                 listarPresentes();
-                Swal.fire('Sucesso', 'Presente cadastrado com sucesso!', 'success');
+                Swal.fire('Sucesso', data.success, 'success');
             } else {
-                alert('Erro ao cadastrar presente: ' + data.message);
+                Swal.fire('Alerta',  data.erro, 'warning');
             }
         })
         .catch(error => {
@@ -95,8 +96,8 @@ function listarPresentes() {
             }
 
             presentes.forEach(presente => {
+                console.log(presente)
                 const tr = document.createElement('tr');
-                tr.id = `linha-${presente.id}`;
                 tr.classList.add('border-b', 'hover:bg-blue-50');
 
                 // Status geral
@@ -115,7 +116,7 @@ function listarPresentes() {
                 </button>`;
 
                 tr.innerHTML = `
-                <td class="py-3 px-4">#${presente.id}</td>
+                <td class="py-3 px-4">${formatarData(presente.data_cadastro)}</td>
                 <td class="py-3 px-4 descricao">${presente.descricao}</td>
                 <td class="py-3 px-4 valor">R$ ${parseFloat(presente.valor_total).toFixed(2)}</td>
                 <td class="py-3 px-4 status">${statusPago}</td>
@@ -281,4 +282,12 @@ function abrirModalCadastro() {
 function fecharModalCadastro() {
     document.getElementById('modal-cadastro').classList.add('hidden');
     limparFormulario();
+}
+
+function formatarData(iso) {
+    const data = new Date(iso);
+    const dia = String(data.getDate() + 1).padStart(2, '1');
+    const mes = String(data.getMonth() + 1).padStart(2, '0');
+    const ano = data.getFullYear();
+    return `${dia}/${mes}/${ano}`;
 }

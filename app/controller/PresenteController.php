@@ -61,7 +61,7 @@ class PresenteController
             echo json_encode(['success' => 'Presente cadastrado com sucesso!']);
             exit;
         } else {
-            echo json_encode(['erro' => 'Erro ao cadastrar presente!']);
+            echo json_encode(['erro' => 'Preencha todos os campos!']);
             exit;
         }
     }

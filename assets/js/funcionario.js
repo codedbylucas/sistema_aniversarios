@@ -34,7 +34,7 @@ function deletarFuncionario(id) {
                         listarFuncionario()
                         Swal.fire('Deletado!', data.mensagem, 'success');
                     } else {
-                        Swal.fire('Alerta!', data.mensagem, 'error');
+                        Swal.fire('Alerta!', data.mensagem, 'warning');
                     }
 
                 }).catch(error => {
@@ -69,9 +69,9 @@ function cadastrarFuncionario() {
                 listarFuncionario();
                 Swal.fire("Sucesso", data.mensagem, "success");
             } else {
-                Swal.fire("Erro", data.mensagem, "error");
+                Swal.fire("Alerta", data.erro, "warning");
             }
-        })
+        })  
         .catch(error => {
             console.error("Erro ao atualizar:", error);
             Swal.fire("Erro", "Erro inesperado ao atualizar funcionário", "error");
@@ -107,7 +107,7 @@ function atualizarFuncionario() {
                 Swal.fire("Sucesso", data.mensagem, "success");
 
             } else {
-                Swal.fire("Erro", data.mensagem, "error");
+                Swal.fire("Erro", data.mensagem, "warning");
             }
         })
         .catch(error => {
@@ -185,10 +185,10 @@ function listarFuncionario() {
                     <td class="py-3 px-4 nome">${f.nome}</td>
                     <td class="py-3 px-4 cargo">${f.cargo}</td>
                     <td class="py-3 px-4 whatsapp">${f.whatsapp}</td>
-                    <td class="py-3 px-4 data_nascimento">${f.data_nascimento}</td>
+                    <td class="py-3 px-4 data_nascimento">${formatarData(f.data_nascimento)}</td>
                     <td class="py-3 px-4 flex gap-2">
                         <button onclick="editarFuncionario(${f.id})"
-                            class="bg-yellow-400 hover:bg-yellow-500 text-white py-1 px-3 rounded-lg text-sm">
+                            class="bg-blue-400 hover:bg-blue-500 text-white py-1 px-3 rounded-lg text-sm">
                             Editar
                         </button>
                         <button onclick="deletarFuncionario(${f.id})"
@@ -223,4 +223,12 @@ function abrirModalEditar() {
 function fecharModalEditar() {
     document.getElementById('modalEditar').classList.add('hidden');
     limparFormulario('formEditarFuncionario');
+}
+
+function formatarData(iso) {
+    const data = new Date(iso);
+    const dia = String(data.getDate() + 1).padStart(2, '1');
+    const mes = String(data.getMonth() + 1).padStart(2, '0');
+    const ano = data.getFullYear();
+    return `${dia}/${mes}/${ano}`;
 }

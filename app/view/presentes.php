@@ -21,11 +21,11 @@ if (AutenticacaoController::validarAcesso() === false) {
     <script src="../../assets/js/presentes.js "></script>
 </head>
 
-<body class="bg-slate-100 min-h-screen flex">
+<body class="bg-blue-50 min-h-screen flex">
 
     <?php require '../header/header.php'; ?>
 
-    <main class="flex-1 p-10">
+    <main class="flex-1 ml-64 p-10 overflow-y-auto">
 
 
         <div class="flex justify-between items-center mb-8">
@@ -44,7 +44,7 @@ if (AutenticacaoController::validarAcesso() === false) {
             <table class="w-full border-collapse">
                 <thead>
                     <tr class="bg-blue-100 text-blue-700">
-                        <th class="py-3 px-4 text-left rounded-tl-lg">ID</th>
+                        <th class="py-3 px-4 text-left rounded-tl-lg">Data Cadastro</th>
                         <th class="py-3 px-4 text-left rounded-tl-lg">Presente</th>
                         <th class="py-3 px-4 text-left">Valor Total</th>
                         <th class="py-3 px-4 text-left">Status</th>
