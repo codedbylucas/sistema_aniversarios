@@ -73,4 +73,5 @@ O desenvolvimento do projeto seguiu uma **metodologia incremental**, priorizando
 1. **Clonar o repositório:**
    ```bash
    git clone https://github.com/seu-usuario/sistema-aniversariantes.git
-<img width="667" height="117" alt="image" src="https://github.com/user-attachments/assets/5d0fef59-48b2-4c44-b47c-e8c70b4414f0" />
+<img width="1312" height="646" alt="image" src="https://github.com/user-attachments/assets/6733dc79-8357-4135-bec2-465ddfc96df8" />
+
