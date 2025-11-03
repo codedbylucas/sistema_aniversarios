@@ -185,6 +185,38 @@ class PresenteDAO implements IPresenteDAO
             return true;
         }
     }
-    
+
     public function atualizar(Presente $presente) {}
+
+    public function redistribuirValores($id_presente)
+    {
+        $sqlValor = $this->pdo->prepare("SELECT valor_total FROM presentes WHERE id = :id");
+        $sqlValor->bindValue(':id', $id_presente);
+        $sqlValor->execute();
+        $presente = $sqlValor->fetch(PDO::FETCH_ASSOC);
+
+        if (!$presente) {
+            return false;
+        }
+
+        $valor_total = $presente['valor_total'];
+
+        // Verifica quantos participantes ainda restam
+        $sqlQtd = $this->pdo->prepare("SELECT COUNT(*) as total FROM participacoes_presentes WHERE id_presente = :id");
+        $sqlQtd->bindValue(':id', $id_presente);
+        $sqlQtd->execute();
+        $qtd = $sqlQtd->fetch(PDO::FETCH_ASSOC)['total'];
+
+        if ($qtd > 0) {
+            // Divide novamente o valor
+            $novoValor = number_format($valor_total / $qtd, 2, '.', '');
+
+            $stmtUpdate = $this->pdo->prepare("UPDATE participacoes_presentes SET valor_contribuicao = :valor WHERE id_presente = :id");
+            $stmtUpdate->bindValue(':valor', $novoValor);
+            $stmtUpdate->bindValue(':id', $id_presente);
+            $stmtUpdate->execute();
+        }
+
+        return true;
+    }
 }

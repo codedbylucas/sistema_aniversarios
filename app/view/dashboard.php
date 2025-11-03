@@ -5,7 +5,6 @@ require_once __DIR__ . '/../controller/AutenticacaoController.php';
 if (AutenticacaoController::validarAcesso() === false) {
     AutenticacaoController::encerrarSessao();
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +15,7 @@ if (AutenticacaoController::validarAcesso() === false) {
     <title>Dashboard | Sistema de Aniversários</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../../assets/js/dashboard.js "></script>
+    <script src="../../assets/js/dashboard.js"></script>
 </head>
 
 <body class="bg-blue-50 min-h-screen flex">
@@ -30,27 +29,27 @@ if (AutenticacaoController::validarAcesso() === false) {
 
         <!-- Cards de resumo -->
         <div id="card-relatorio" class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-
+            <!-- Conteúdo dos cards gerado pelo JS -->
         </div>
 
         <!-- Seção de aniversariantes -->
-        <div id="lista-aniversario" class="bg-white rounded-3xl shadow-xl p-8">
-            <h3 class="text-2xl font-bold text-blue-600 mb-4">Aniversariantes deste mês</h3>
-            <table class="w-full border-collapse">
+        <div id="lista-aniversario" class="bg-white rounded-3xl shadow-2xl p-8">
+            <h3 class="text-2xl font-bold text-blue-600 mb-6">Aniversariantes deste mês</h3>
+            <table class="w-full border-collapse text-left">
                 <thead>
-                    <tr class="bg-blue-100 text-blue-700">
-                        <th class="py-3 px-4 text-left rounded-tl-lg">Nome</th>
-                        <th class="py-3 px-4 text-left">Data</th>
-                        <th class="py-3 px-4 text-left">Cargo</th>
-                        <th class="py-3 px-4 text-left rounded-tr-lg">Ações</th>
+                    <tr class="bg-gradient-to-r from-blue-100 to-blue-200 text-blue-700">
+                        <th class="py-3 px-4 rounded-tl-lg">Nome</th>
+                        <th class="py-3 px-4">Data</th>
+                        <th class="py-3 px-4">Cargo</th>
+                        <th class="py-3 px-4 rounded-tr-lg">Ações</th>
                     </tr>
                 </thead>
-                <tbody id="tabela-aniversario">
-
+                <tbody id="tabela-aniversario" class="divide-y divide-gray-200">
+                    <!-- Linhas geradas pelo JS -->
                 </tbody>
             </table>
         </div>
     </main>
-</body>
 
+</body>
 </html>

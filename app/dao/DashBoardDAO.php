@@ -1,7 +1,8 @@
 <?php
 
 
-class DashBoardDAO {
+class DashBoardDAO
+{
 
     private $pdo;
 
@@ -10,7 +11,8 @@ class DashBoardDAO {
         $this->pdo = $pdo;
     }
 
-    public function buscarFuncionarios() {
+    public function buscarFuncionarios()
+    {
         $sql = $this->pdo->query('SELECT * FROM funcionarios');
         $sql->execute();
         $result = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -18,21 +20,24 @@ class DashBoardDAO {
         return $result;
     }
 
-    public function presentesPagos() {
+    public function presentesPagos()
+    {
         $sql = $this->pdo->query("SELECT COUNT(*) as quantidade FROM presentes WHERE status = 'pago' ");
         $sql->execute();
         $result = $sql->fetch(PDO::FETCH_ASSOC);
 
-        if($result['quantidade'] > 0) {
+        if ($result['quantidade'] > 0) {
             return $result['quantidade'];
-        }else {
+        } else {
             return 0;
         }
     }
 
-    public function aniversariosMes() {
+    public function aniversariosMes()
+    {
         $sql = $this->pdo->query(
-        "SELECT * FROM funcionarios WHERE MONTH(data_nascimento) = MONTH(CURDATE())");
+            "SELECT * FROM funcionarios WHERE MONTH(data_nascimento) = MONTH(CURDATE())"
+        );
         $sql->execute();
         $result = $sql->fetchAll(PDO::FETCH_ASSOC);
         return $result;

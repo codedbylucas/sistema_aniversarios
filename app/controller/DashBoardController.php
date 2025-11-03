@@ -23,10 +23,11 @@ class DashBoardController
         $aniversariosMes = $this->dashboardDao->aniversariosMes();
 
         header('Content-Type: application/json');
-        echo json_encode([['funcionarios' => count($getFuncionarios),
+        echo json_encode([[
+            'funcionarios' => count($getFuncionarios),
             'presentes' => $presentesPagos,
-            'aniversariantes_mes' => $aniversariosMes]]);
-
+            'aniversariantes_mes' => $aniversariosMes
+        ]]);
     }
 }
 

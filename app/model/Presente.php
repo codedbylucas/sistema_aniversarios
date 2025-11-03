@@ -47,4 +47,5 @@ interface IPresenteDAO {
     public function verificarStatusParticipante($id_relacao);
     public function deletarParticipacao($id_relacao);
     public function buscarPorIdPresente($id_presente);
+    public function redistribuirValores($id_presente);
 }

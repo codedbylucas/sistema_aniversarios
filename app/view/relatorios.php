@@ -17,6 +17,23 @@ if (AutenticacaoController::validarAcesso() === false) {
     <title>Presentes - Sistema de Aniversários</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="../../assets/js/relatorioGeral.js"></script>
+    <style>
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .animate-fadeInUp {
+            animation: fadeInUp 0.4s ease-out forwards;
+        }
+    </style>
 </head>
 
 <body class="bg-blue-50 min-h-screen flex">
@@ -34,7 +51,7 @@ if (AutenticacaoController::validarAcesso() === false) {
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Mês</label>
                     <select id="mes" class="w-full border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-200">
-                        <option >Selecione...</option>
+                        <option value="">Selecione...</option>
                         <option value="1">Janeiro</option>
                         <option value="2">Fevereiro</option>
                         <option value="3">Março</option>
@@ -69,27 +86,32 @@ if (AutenticacaoController::validarAcesso() === false) {
             </form>
         </div>
 
-        <div id="card" class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <!-- Container dos cards -->
+        <div id="card" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6"></div>
 
-        </div>
-
-        <!-- Tabela -->
-        <div class="bg-white p-6 rounded-2xl shadow-md">
-            <h2 class="text-xl font-semibold mb-4 text-blue-700">Detalhamento</h2>
-            <table class="min-w-full border border-gray-200">
-                <thead>
-                    <tr class="bg-blue-50 text-blue-800">
-                        <th class="py-2 px-3 text-left">Participantes</th>
-                        <th class="py-2 px-3 text-left">Presente</th>
-                        <th class="py-2 px-3 text-left">Valor</th>
-                        <th class="py-2 px-3 text-left">Data</th>
-                        <th class="py-2 px-3 text-left">Status</th>
+        <!-- Tabela de presentes -->
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white rounded-2xl shadow-lg overflow-hidden">
+                <thead class="bg-blue-100">
+                    <tr>
+                        <th class="py-3 px-4 text-left">Ações</th>
+                        <th class="py-3 px-4 text-left">Descrição</th>
+                        <th class="py-3 px-4 text-left">Valor</th>
+                        <th class="py-3 px-4 text-left">Data</th>
+                        <th class="py-3 px-4 text-left">Status</th>
                     </tr>
                 </thead>
-                <tbody id="tbody">
-
-                </tbody>
+                <tbody id="tbody" class="bg-white divide-y divide-gray-200"></tbody>
             </table>
+        </div>
+
+        <!-- Modal Participantes -->
+        <div id="modal-participantes" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 transition-all duration-300">
+            <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-6 transform scale-95 opacity-0 animate-fadeInUp relative">
+                <button onclick="fecharModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl transition">✖</button>
+                <h3 class="text-2xl font-bold text-blue-600 mb-4 text-center">Participantes</h3>
+                <ul id="lista-participantes" class="space-y-2 max-h-64 overflow-y-auto"></ul>
+            </div>
         </div>
 
     </main>

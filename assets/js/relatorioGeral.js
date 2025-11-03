@@ -38,7 +38,13 @@ async function relatorioGeral() {
         result.dados.forEach(presente => {
             linhas += `
                 <tr class="border-t">
-                    <td class="py-2 px-3">${presente.participantes}</td>
+                    <td class="py-2 px-3 text-center">
+                        <button 
+                            onclick="abrirModal('${presente.participantes}')"
+                            class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold px-4 py-2 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                            Ver Participantes
+                        </button>
+                    </td>
                     <td class="py-2 px-3">${presente.descricao}</td>
                     <td class="py-2 px-3">${presente.valor_total}</td>
                     <td class="py-2 px-3">${formatarData(presente.data_cadastro)}</td>
@@ -99,7 +105,13 @@ function listarTodosPresentes() {
             data.dados.forEach(presente => {
                 linhas += `
                 <tr class="border-t">
-                    <td class="py-2 px-3">${presente.participantes}</td>
+                    <td class="py-2 px-3 text-center">
+                        <button 
+                            onclick="abrirModal('${presente.participantes}')"
+                            class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold px-4 py-2 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                            Ver Participantes
+                        </button>
+                    </td>
                     <td class="py-2 px-3">${presente.descricao}</td>
                     <td class="py-2 px-3">${presente.valor_total}</td>
                     <td class="py-2 px-3">${formatarData(presente.data_cadastro)}</td>
@@ -125,6 +137,23 @@ function listarTodosPresentes() {
                 </tr>
             `;
         });
+}
+
+function abrirModal(participantes) {
+    const lista = document.getElementById('lista-participantes');
+    const modal = document.getElementById('modal-participantes');
+
+    // Divide os nomes por vírgula e cria lista
+    const nomes = participantes.split(',').map(n => n.trim()).filter(n => n !== '');
+    lista.innerHTML = nomes.length
+        ? nomes.map(n => `<li class="bg-blue-50 rounded-lg py-2">${n}</li>`).join('')
+        : `<li class="text-gray-500 italic">Nenhum participante</li>`;
+
+    modal.classList.remove('hidden');
+}
+
+function fecharModal() {
+    document.getElementById('modal-participantes').classList.add('hidden');
 }
 
 function letraMaiuscula(string) {

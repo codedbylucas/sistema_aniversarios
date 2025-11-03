@@ -18,37 +18,41 @@ class RelatorioGeralController
 
     public function relatorioGeral()
     {
-
-        $mes = intval($_GET['mes']) ?? null;
+        $mes = $_GET['mes'] ?? null;
         $status = $_GET['status'] ?? null;
 
-        if ($mes && $status) {
-            $dados = $this->relatorioDAO->buscarFiltro($mes, $status);
-
-            $totalAniversariantes = count(array_unique(array_column($dados, 'funcionario')));
-            $totalPresentes = count($dados);
-            $totalPagos = count(array_filter($dados, fn($item) => $item['status'] === 'pago'));
-            $totalPendentes = $totalPresentes - $totalPagos;
-
-            header('Content-Type: application/json');
-
-            echo json_encode([
-                'dados' => $dados,
-                'totalAniversarios' => $totalAniversariantes,
-                'totalPagos' => $totalPagos,
-                'totalPresentes' => $totalPresentes,
-                'totalPendentes' => $totalPendentes
-            ]);
+        if ($mes === '' || strtolower($mes) === 'todos') {
+            $mes = null;
+        } else {
+            $mes = intval($mes);
         }
+
+        $dados = $this->relatorioDAO->buscarFiltro($mes, $status);
+
+        $totalAniversariantes = count(array_unique(array_column($dados, 'funcionario')));
+        $totalPresentes = count($dados);
+        $totalPagos = count(array_filter($dados, fn($item) => $item['status'] === 'pago'));
+        $totalPendentes = $totalPresentes - $totalPagos;
+
+        header('Content-Type: application/json');
+
+        echo json_encode([
+            'dados' => $dados,
+            'totalAniversarios' => $totalAniversariantes,
+            'totalPagos' => $totalPagos,
+            'totalPresentes' => $totalPresentes,
+            'totalPendentes' => $totalPendentes
+        ]);
     }
 
-    public function buscarTodos() {
+    public function buscarTodos()
+    {
         $dados = $this->relatorioDAO->buscarTodosPresentes();
         $totalPresentes = count($dados);
         $totalPagos = count(array_filter($dados, fn($item) => $item['status'] === 'pago'));
         $totalPendentes = $totalPresentes - $totalPagos;
 
-        if($dados) {
+        if ($dados) {
             header('Content-Type: application/json');
             echo json_encode([
                 'dados' => $dados,
@@ -57,20 +61,19 @@ class RelatorioGeralController
                 'totalPendentes' => $totalPendentes
             ]);
             exit;
-        }else {
+        } else {
             echo json_encode(['erro' => true]);
             exit;
         }
-
     }
 }
 
-if (!empty($_GET['mes']) && !empty($_GET['status'])) {
+if (!empty($_GET['mes']) || !empty($_GET['status'])) {
     $controller = new RelatorioGeralController();
     $controller->relatorioGeral();
 }
 
-if(!empty($_GET['acao']) && $_GET['acao'] === 'listar'){
+if (!empty($_GET['acao']) && $_GET['acao'] === 'listar') {
     $controlleer = new RelatorioGeralController();
     $controlleer->buscarTodos();
 }

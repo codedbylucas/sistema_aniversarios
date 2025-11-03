@@ -13,7 +13,6 @@ class RelatorioGeralDAO
 
     public function buscarFiltro($mes = null, $status = null)
     {
-
         $sql =
             "SELECT
                 p.descricao,
@@ -54,7 +53,8 @@ class RelatorioGeralDAO
         return $stmt->fetchAll(PDO::FETCH_ASSOC); // retorna array vazio se nada encontrado
     }
 
-    public function buscarTodosPresentes() {
+    public function buscarTodosPresentes()
+    {
         $sql = $this->pdo->prepare(
             "SELECT
                 p.descricao,
@@ -68,12 +68,13 @@ class RelatorioGeralDAO
             WHERE 1 = 1
             GROUP BY p.descricao, p.valor_total, p.data_cadastro, p.status
             ORDER BY p.status DESC
-        ");
+        "
+        );
         $sql->execute();
-        if($sql->rowCount() > 0) {
+        if ($sql->rowCount() > 0) {
             $result = $sql->fetchAll(PDO::FETCH_ASSOC);
-            return $result; 
-        }else {
+            return $result;
+        } else {
             return [];
         }
     }

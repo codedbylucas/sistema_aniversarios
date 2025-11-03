@@ -56,7 +56,7 @@ function cadastrarPresente() {
                 listarPresentes();
                 Swal.fire('Sucesso', data.success, 'success');
             } else {
-                Swal.fire('Alerta',  data.erro, 'warning');
+                Swal.fire('Alerta', data.erro, 'warning');
             }
         })
         .catch(error => {
@@ -75,7 +75,7 @@ function listarPresentes() {
         })
         .then(presentes => {
             const tbody = document.querySelector('#tabela-presentes');
-            
+
             tbody.innerHTML = ''; // Limpa a tabela antes de recriar
 
             // Garante que o retorno é um array
@@ -83,7 +83,7 @@ function listarPresentes() {
                 console.warn("O retorno não é um array. Corrigindo estrutura...");
                 presentes = [presentes];
             }
-            
+
             if (presentes[0].erro) {
                 tbody.innerHTML = `
                     <tr>
@@ -106,14 +106,38 @@ function listarPresentes() {
                     : `<span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm">Pendente</span>`;
 
                 // Botões de ação
-                const btnDetalhes = `<button onclick="abrirDetalhes(${presente.id})"
-                    class="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded-lg text-sm">
+                const btnDetalhes = `
+                <button onclick="abrirDetalhes(${presente.id})"
+                    class="group relative inline-flex items-center justify-center px-4 py-2 
+                        overflow-hidden font-semibold rounded-xl text-white 
+                        bg-gradient-to-r from-blue-500 to-blue-600
+                        transition-all duration-300 hover:shadow-lg hover:scale-105
+                        focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2">
+                    <span class="absolute inset-0 w-full h-full bg-blue-400 opacity-0 group-hover:opacity-20 transition-opacity"></span>
+                    <svg class="w-4 h-4 mr-2 text-white" fill="none" stroke="currentColor" stroke-width="2" 
+                        viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" 
+                            d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
                     Detalhes
-                </button>`;
-                const btnExcluir = `<button onclick="deletarPresente(${presente.id})"
-                    class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-lg text-sm">
+                </button>
+                `;
+                const btnExcluir = `
+                <button onclick="deletarPresente(${presente.id})"
+                    class="group relative inline-flex items-center justify-center px-4 py-2 
+                        overflow-hidden font-semibold rounded-xl text-white 
+                        bg-gradient-to-r from-red-500 to-red-600
+                        transition-all duration-300 hover:shadow-lg hover:scale-105
+                        focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2">
+                    <span class="absolute inset-0 w-full h-full bg-red-400 opacity-0 group-hover:opacity-20 transition-opacity"></span>
+                    <svg class="w-4 h-4 mr-2 text-white" fill="none" stroke="currentColor" stroke-width="2" 
+                        viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" 
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
                     Excluir
-                </button>`;
+                </button>
+                `;
 
                 tr.innerHTML = `
                 <td class="py-3 px-4">${formatarData(presente.data_cadastro)}</td>
@@ -150,8 +174,8 @@ function abrirDetalhes(idPresente) {
                 <p><strong>Valor total:</strong> R$ ${parseFloat(presente[0].valor_total).toFixed(2)}</p>
                 <p><strong>Status geral:</strong> 
                     ${presente[0].status === "pago"
-                        ? `<span class="bg-green-100 text-green-700 px-6 py-1 rounded-full text-sm">Pago</span>`
-                        : `<span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm">Pendente</span>`}
+                    ? `<span class="bg-green-100 text-green-700 px-6 py-1 rounded-full text-sm">Pago</span>`
+                    : `<span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm">Pendente</span>`}
                 </p>
             `;
 
@@ -185,7 +209,7 @@ function abrirDetalhes(idPresente) {
             })
 
             modal.classList.remove('hidden');
-            
+
         }).catch(error => console.error("Erro ao carregar detalhes:", error));
 
 }
@@ -220,16 +244,16 @@ function deletarParticipacao(id_relacao) {
     }).then((result) => {
         if (result.isConfirmed) {
             fetch(`../controller/PresenteController.php?acao=deletarParticipacao&id_relacao=${id_relacao}`)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                if (data.success) {
-                    listarPresentes();
-                    abrirDetalhes(data.id_presente);
-                } else {
-                    alert('Erro ao deletar participação: ' + data.message);
-                }
-            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    if (data.success) {
+                        listarPresentes();
+                        abrirDetalhes(data.id_presente);
+                    } else {
+                        alert('Erro ao deletar participação: ' + data.message);
+                    }
+                })
             Swal.fire(
                 'Deletado!',
                 'A participação foi deletada.',

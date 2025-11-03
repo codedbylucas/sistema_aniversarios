@@ -113,7 +113,7 @@ class PresenteController
                 echo json_encode([
                     'success' => $pago,
                     'id_presente' => $id_presente
-                    ]);
+                ]);
             } else {
                 echo json_encode(['erro' => 'Erro ao marcar pagamento como pago!']);
                 exit;
@@ -131,6 +131,8 @@ class PresenteController
             $deletar = $this->presenteDAO->deletarParticipacao($id_relacao);
 
             if ($deletar) {
+                $this->presenteDAO->redistribuirValores($id_presente);
+
                 header('Content-Type: application/json');
                 echo json_encode([
                     'success' => $deletar,
@@ -193,7 +195,7 @@ if (!empty($_GET['acao']) && $_GET['acao'] === 'deletarParticipacao') {
     $presenteController->deletarParticipacao($_GET['id_relacao']);
 }
 
-if(!empty($_GET['acao']) && $_GET['acao'] === 'deletarPresente'){
+if (!empty($_GET['acao']) && $_GET['acao'] === 'deletarPresente') {
     $presenteController = new PresenteController();
     $presenteController->deletarPresente($_GET['id']);
 }
