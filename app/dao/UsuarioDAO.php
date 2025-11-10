@@ -17,7 +17,7 @@ class UsuarioDAO implements IUsuarioDAO
         $sql->bindValue(':nome', $usuario->getNome());
         $sql->bindValue(':email', $usuario->getEmail());
         $sql->bindValue(':senha', $usuario->getSenha());
-        $sql->execute();
+        return $sql->execute();
     }
     public function atualizar(Usuario $usuario) {}
     public function deletar($id) {}

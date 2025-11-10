@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <title>Cadastrar | Sistema de Aniversários</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="../../assets/js/sweetalert2.all.min.js"></script>
+  <script src="../../assets/js/login.js"></script>
 </head>
 
 <body class="bg-blue-100 flex justify-center items-center min-h-screen">
@@ -14,45 +14,37 @@
     <!-- Título -->
     <h1 class="text-3xl font-bold text-center text-blue-600 mb-8">📝 Criar Conta</h1>
 
-    <!-- Formulário de Cadastro -->
-    <form method="POST" action="../../app/controller/CadastroController.php" class="space-y-6">
+    <!-- Formulário de Cadastro action="../../app/controller/CadastroController.php" -->
+    <form method="POST" class="space-y-6">
       <div>
         <label class="block text-blue-700 font-semibold mb-2">Nome</label>
-        <input type="text" name="nome" placeholder="Digite seu nome" required
+        <input type="text" name="nome" id="nome" placeholder="Digite seu nome" required
           class="w-full p-3 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
       </div>
 
       <div>
         <label class="block text-blue-700 font-semibold mb-2">E-mail</label>
-        <input type="email" name="email" placeholder="Digite seu e-mail" required
+        <input type="email" name="email" id="email" placeholder="Digite seu e-mail" required
           class="w-full p-3 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
       </div>
 
       <div>
         <label class="block text-blue-700 font-semibold mb-2">Senha</label>
-        <input type="password" name="senha" placeholder="Digite sua senha" required
+        <input type="password" name="senha" id="senha" placeholder="Digite sua senha" required
           class="w-full p-3 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
       </div>
 
-      <button type="submit" name="cadastrar"
-        class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-lg transition">
-        Cadastrar
-      </button>
+      <input type="button" name="cadastrar"
+        class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-lg transition"
+        value="Cadastrar"
+        onclick="cadastrarUsuario()" />
     </form>
 
-    <?php
-    if (isset($_GET['mensagem'])) {
-      echo "<div id='mensagem-alerta' class='mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg'>
-            {$_GET['mensagem']}
-          </div>";
-    }
+    <div id='mensagem-alerta'>
 
-    if (isset($_GET['erro'])) {
-      echo "<div class='mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg'>
-            {$_GET['erro']}
-          </div>";
-    }
-    ?>
+    </div>
+
+    
 
 
 
