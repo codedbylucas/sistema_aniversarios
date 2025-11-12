@@ -19,9 +19,6 @@ class UsuarioDAO implements IUsuarioDAO
         $sql->bindValue(':senha', $usuario->getSenha());
         return $sql->execute();
     }
-    public function atualizar(Usuario $usuario) {}
-    public function deletar($id) {}
-    public function buscarPorId($id) {}
 
     public function buscarPorEmail($email) {
         $sql = $this->pdo->prepare('SELECT * FROM usuarios WHERE email = :email');
@@ -41,4 +38,9 @@ class UsuarioDAO implements IUsuarioDAO
         
         return false;
     }
+    
+    //RESTANTE DOS METODOS CASO NECESSARIO
+    public function atualizar(Usuario $usuario) {}
+    public function deletar($id) {}
+    public function buscarPorId($id) {}
 }

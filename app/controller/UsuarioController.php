@@ -22,6 +22,11 @@ class UsuarioController
         $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
         $senha = filter_input(INPUT_POST, 'senha', FILTER_SANITIZE_STRING);
 
+        if (!$email || !$senha) {
+            echo json_encode(['success' => false, 'message' => 'Preencha email e senha.']);
+            return;
+        }
+
         if ($email && $senha) {
 
             $usuario = $this->usuarioDAO->buscarPorEmail($email);
@@ -31,15 +36,18 @@ class UsuarioController
                 $_SESSION['email'] = $usuario->getEmail();
                 $_SESSION['usuario_id'] = $usuario->getId();
 
-                header("Location: ../view/dashboard.php");
-                exit;
+                // responda com JSON indicando sucesso e a URL para redirecionar
+                echo json_encode(['success' => true, 'redirect' => '../view/dashboard.php']);
+                return;
             } else {
-                header("Location: ../view/login.php?erro=Email ou senha inválidos. Tente novamente.");
-                exit;
+                echo json_encode(['success' => false, 'message' => 'Email ou senha inválidos.']);
+                return;
             }
         }
     }
 }
 
-$login = new UsuarioController();
-$login->processarLogin();
+if (isset($_GET['acao']) && $_GET['acao'] === 'login') {
+    $controller = new UsuarioController();
+    $controller->processarLogin();
+}

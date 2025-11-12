@@ -14,7 +14,7 @@
     <!-- Título -->
     <h1 class="text-3xl font-bold text-center text-blue-600 mb-8">📝 Criar Conta</h1>
 
-    <!-- Formulário de Cadastro action="../../app/controller/CadastroController.php" -->
+    <!-- Formulário de Cadastro -->
     <form method="POST" class="space-y-6">
       <div>
         <label class="block text-blue-700 font-semibold mb-2">Nome</label>
